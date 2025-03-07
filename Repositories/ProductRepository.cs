@@ -37,6 +37,15 @@ namespace FoodOrderSystem.Repositories
             return await _context.SaveChangesAsync() > 0;
         }
 
+        public async Task<bool> DeleteProductCategoriesAsync(int productId)
+        {
+            var product = await _context.Products.Include(p => p.Categories).FirstOrDefaultAsync(p => p.ProductId == productId);
+            if (product == null) return false;
+
+            product.Categories.Clear();
+            return await _context.SaveChangesAsync() > 0;
+        }
+
         public async Task<bool> UpdateProductInfoAsync(int productId, string name, int price, string description, DateOnly releaseDate, string author, int quantity)
         {
             var product = await _context.Products.FindAsync(productId);
@@ -82,7 +91,7 @@ namespace FoodOrderSystem.Repositories
 
         public async Task<Product?> GetProductByIdAsync(int productId)
         {
-            return await _context.Products.FirstOrDefaultAsync(p => p.ProductId == productId);
+            return await _context.Products.AsNoTracking().FirstOrDefaultAsync(p => p.ProductId == productId);
         }
 
         public async Task<List<Product>> GetAllProductsWithPagingAsync(int page, int pageSize)

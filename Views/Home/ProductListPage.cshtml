@@ -1,0 +1,233 @@
+﻿@{
+    ViewData["Title"] = "Product List";
+}
+
+<div class="notion-container">
+    <h2>Product List</h2>
+
+    @if (ViewData["ERROR_MESSAGE"] != null)
+    {
+        <div class="error-message">@ViewData["ERROR_MESSAGE"]</div>
+    }
+
+    <!-- Form tìm kiếm -->
+    <form method="get" action="@Url.Action("SearchProducts", "Home")" class="search-form">
+        <div class="form-group">
+            <input type="text" name="name" placeholder="Product Name" value="@ViewData["searchName"]" class="form-input" />
+            <input type="number" name="priceMin" placeholder="Min Price" value="@ViewData["searchPriceMin"]" class="form-input" />
+            <input type="number" name="priceMax" placeholder="Max Price" value="@ViewData["searchPriceMax"]" class="form-input" />
+        </div>
+        <div class="form-group">
+            <label>Category:</label>
+            <select name="categoryId" class="form-select">
+                <option value="">-- Select a Category --</option> <!-- Optional default empty option -->
+                @if (ViewData["categoryList"] != null)
+                {
+                    var categories = (List<FoodOrderSystem.DTOs.CategoryDTO>)ViewData["categoryList"];
+                    foreach (var category in categories)
+                    {
+                        <option value="@category.CategoryId">@category.CategoryName</option>
+                    }
+                }
+            </select>
+        </div>
+        <button type="submit" class="form-button">Search</button>
+    </form>
+
+    <!-- Danh sách sản phẩm -->
+    <table class="notion-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Release Date</th>
+                <th>Author</th>
+                <th>Quantity</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ViewData["productList"] != null)
+            {
+                var products = (List<FoodOrderSystem.DTOs.ProductDTO>)ViewData["productList"];
+                foreach (var product in products)
+                {
+                    <tr>
+                        <td>@product.ProductId</td>
+                        <td>@product.ProductName</td>
+                        <td>@product.Price</td>
+                        <td>@product.Description</td>
+                        <td>@product.ReleaseDate.ToString("yyyy-MM-dd")</td>
+                        <td>@product.Author</td>
+                        <td>@product.Quantity</td>
+                        <td><img src="@product.Img" alt="Product Image" class="product-image" /></td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="8" class="no-data">No products found.</td></tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Phân trang -->
+    @if ((int)ViewData["totalPage"] > 1)
+    {
+        <div class="pagination">
+            @for (int i = 1; i <= (int)ViewData["totalPage"]; i++)
+            {
+                <a href="@Url.Action("Index", "Home", new { page = i })" class="page-link">@i</a>
+            }
+        </div>
+    }
+
+    <a href="@Url.Action("Index", "Home")" class="back-link">Back to Home</a>
+</div>
+
+<style>
+    /* Notion-inspired styles */
+    .notion-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #2f2f2f;
+        margin-bottom: 20px;
+    }
+
+    .error-message {
+        color: #d1344b;
+        background-color: #fef1f4;
+        padding: 10px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+
+    .search-form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        margin-bottom: 30px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .form-input, .form-select {
+        padding: 8px 12px;
+        border: 1px solid #e5e5e5;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        color: #333;
+        background-color: #fafafa;
+        transition: border-color 0.2s;
+    }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #888;
+        }
+
+    .form-select {
+        min-width: 200px;
+        height: 36px; /* Adjusted height for single-select */
+    }
+
+    .form-button {
+        padding: 8px 16px;
+        background-color: #2f2f2f;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+        .form-button:hover {
+            background-color: #555;
+        }
+
+    .notion-table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+        .notion-table th, .notion-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .notion-table th {
+            background-color: #f5f5f5;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .notion-table tr:hover {
+            background-color: #fafafa;
+        }
+
+    .product-image {
+        width: 50px;
+        height: auto;
+        border-radius: 4px;
+    }
+
+    .no-data {
+        text-align: center;
+        color: #777;
+        padding: 20px;
+    }
+
+    .pagination {
+        display: flex;
+        gap: 8px;
+        margin: 20px 0;
+    }
+
+    .page-link {
+        padding: 6px 12px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        border-radius: 4px;
+        text-decoration: none;
+        color: #555;
+        transition: background-color 0.2s;
+    }
+
+        .page-link:hover {
+            background-color: #f0f0f0;
+            color: #2f2f2f;
+        }
+
+    .back-link {
+        display: inline-block;
+        padding: 8px 16px;
+        color: #555;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+    }
+
+        .back-link:hover {
+            background-color: #f0f0f0;
+            color: #2f2f2f;
+        }
+</style>

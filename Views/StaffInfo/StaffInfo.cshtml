@@ -1,0 +1,173 @@
+﻿@{
+    ViewData["Title"] = "Staff Information";
+    var account = ViewData["account"] as FoodOrderSystem.Models.Account;
+}
+
+<div class="notion-container">
+    <h1 class="notion-title">Staff Information</h1>
+
+    <!-- Thông báo -->
+    @if (ViewData["MSG_SUCCESS"] != null)
+    {
+        <div class="notion-success">@ViewData["MSG_SUCCESS"]</div>
+    }
+    @if (ViewData["MSG_ERROR"] != null)
+    {
+        <div class="notion-error">@ViewData["MSG_ERROR"]</div>
+    }
+
+    <!-- Cập nhật thông tin cá nhân -->
+    <div class="notion-section">
+        <h2 class="notion-subtitle">Update Profile</h2>
+        <form method="post" action="@Url.Action("UpdateStaffInfo", "StaffInfo")" class="notion-form">
+            <input type="hidden" name="action" value="updateInfo" />
+            
+            <div class="notion-form-group">
+                <label class="notion-label">Name</label>
+                <input type="text" name="name" value="@account?.Fullname" required class="notion-input" />
+            </div>
+
+            <div class="notion-form-group">
+                <label class="notion-label">Phone</label>
+                <input type="text" name="phone" value="@account?.Phone" required class="notion-input" />
+            </div>
+
+            <div class="notion-form-group">
+                <label class="notion-label">Address</label>
+                <input type="text" name="address" value="@account?.Address" required class="notion-input" />
+            </div>
+
+            <div class="notion-form-group">
+                <label class="notion-label">Birth Date</label>
+                <input type="date" name="birth" value="@(account?.Dob?.ToString("yyyy-MM-dd"))" required class="notion-input" />
+            </div>
+
+            <div class="notion-form-group">
+                <label class="notion-label">Gender</label>
+                <select name="gender" class="notion-select">
+                    <!option value="0" @(account?.Gender == 0 ? "selected" : "")>Female</!option>
+                    <!option value="1" @(account?.Gender == 1 ? "selected" : "")>Male</!option>
+                </select>
+            </div>
+
+            <button type="submit" class="notion-button">Update Profile</button>
+        </form>
+    </div>
+
+    <!-- Đổi mật khẩu -->
+    <div class="notion-section">
+        <h2 class="notion-subtitle">Change Password</h2>
+        <form method="post" action="@Url.Action("UpdateStaffInfo", "StaffInfo")" class="notion-form">
+            <input type="hidden" name="action" value="changePassword" />
+            
+            <div class="notion-form-group">
+                <label class="notion-label">Old Password</label>
+                <input type="password" name="oldPassword" required class="notion-input" />
+            </div>
+
+            <div class="notion-form-group">
+                <label class="notion-label">New Password</label>
+                <input type="password" name="newPassword" required class="notion-input" />
+            </div>
+
+            <button type="submit" class="notion-button">Change Password</button>
+        </form>
+    </div>
+
+    <!-- Logout -->
+    <div class="notion-section">
+        <a href="@Url.Action("Index", "Logout")" class="notion-link">Logout</a>
+    </div>
+</div>
+
+<style>
+    .notion-container {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+    }
+
+    .notion-title {
+        font-size: 24px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .notion-subtitle {
+        font-size: 18px;
+        font-weight: 500;
+        color: #555;
+        margin-bottom: 15px;
+    }
+
+    .notion-section {
+        background: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .notion-form-group {
+        margin-bottom: 15px;
+    }
+
+    .notion-label {
+        display: block;
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 5px;
+    }
+
+    .notion-input, .notion-select {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+        background: #fafafa;
+    }
+
+    .notion-button {
+        background: #2eaadc;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .notion-button:hover {
+        background: #268bb5;
+    }
+
+    .notion-success {
+        background: #e6ffe6;
+        color: #2d862d;
+        padding: 10px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+
+    .notion-error {
+        background: #ffe6e6;
+        color: #cc0000;
+        padding: 10px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+
+    .notion-link {
+        color: #2eaadc;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .notion-link:hover {
+        text-decoration: underline;
+    }
+</style>

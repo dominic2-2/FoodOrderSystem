@@ -7,6 +7,7 @@ namespace FoodOrderSystem.Repositories.Implements
         Task<List<Product>> GetAllProductsAsync();
         Task<int> InsertProductAsync(Product product);
         Task<bool> InsertProductCategoryAsync(int categoryId, int productId);
+        Task<bool> DeleteProductCategoriesAsync(int productId);
         Task<bool> UpdateProductInfoAsync(int productId, string name, int price, string description, DateOnly releaseDate, string author, int quantity);
         Task<bool> DeleteProductAsync(int productId);
         Task<bool> UpdateProductAsync(Product product);

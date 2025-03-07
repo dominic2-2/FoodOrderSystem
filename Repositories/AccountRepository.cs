@@ -79,7 +79,9 @@ namespace FoodOrderSystem.Repositories
 
         public async Task<List<Account>> GetAccountStaffsAsync()
         {
-            return await _context.Accounts.Where(a => a.Role == 2).ToListAsync(); // Role = 2 là Staff
+            return await _context.Accounts
+                .Where(a => a.Role == 1 && a.Staff.Any(s => s.AccountId == a.AccountId && s.Role == 3))
+                .ToListAsync();
         }
     }
 }

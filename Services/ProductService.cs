@@ -53,6 +53,11 @@ namespace FoodOrderSystem.Services
             return await _productRepository.InsertProductCategoryAsync(categoryId, productId);
         }
 
+        public async Task<bool> DeleteProductCategoriesAsync(int productId)
+        {
+            return await _productRepository.DeleteProductCategoriesAsync(productId);
+        }
+
         public async Task<bool> UpdateProductInfoAsync(int productId, string name, int price, string description, DateOnly releaseDate, string author, int quantity)
         {
             return await _productRepository.UpdateProductInfoAsync(productId, name, price, description, releaseDate, author, quantity);

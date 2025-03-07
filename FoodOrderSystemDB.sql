@@ -159,11 +159,12 @@ GO
 -- Chèn dữ liệu mẫu vào bảng Account
 SET IDENTITY_INSERT [dbo].[Account] ON 
 INSERT [dbo].[Account] ([account_id], [email], [password], [fullname], [phone], [status_acc], [address], [dob], [gender], [token], [role], [update_time], [create_time], [update_by], [create_by]) VALUES 
-(1, N'customer1@gmail.com', N'96e79218965eb72c92a549dd5a330112', N'Nguyen Van A', N'0912345678', 1, N'123 Tran Phu, Hanoi', CAST(N'1995-05-10' AS Date), 0, NULL, 0, NULL, NULL, NULL, NULL),
-(2, N'staff1@gmail.com', N'e10adc3949ba59abbe56e057f20f883e', N'Tran Thi B', N'0987654321', 1, N'45 Le Loi, Hanoi', CAST(N'1990-03-15' AS Date), 1, NULL, 1, NULL, NULL, NULL, NULL),
-(3, N'manager@gmail.com', N'e10adc3949ba59abbe56e057f20f883e', N'Le Van C', N'0933456789', 1, N'67 Nguyen Trai, Hanoi', CAST(N'1985-07-20' AS Date), 0, NULL, 1, NULL, NULL, NULL, NULL),
-(4, N'delivery@gmail.com', N'e10adc3949ba59abbe56e057f20f883e', N'Pham Thi D', N'0978563412', 1, N'89 Hoang Hoa Tham, Hanoi', CAST(N'1992-11-25' AS Date), 1, NULL, 1, NULL, NULL, NULL, NULL),
-(5, N'customer2@gmail.com', N'211c9bfe9f65bb593128ca11ce792e41', N'Hoang Van E', N'0945678901', 1, N'12 Ly Thuong Kiet, Hanoi', CAST(N'1998-09-30' AS Date), 0, NULL, 0, NULL, NULL, NULL, NULL);
+(1, N'customer1@gmail.com', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Nguyen Van A', N'0912345678', 1, N'123 Tran Phu, Hanoi', CAST(N'1995-05-10' AS Date), 1, NULL, 0, NULL, NULL, NULL, NULL),
+(2, N'seller@gmail.com', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Tran Thi B', N'0987654321', 1, N'45 Le Loi, Hanoi', CAST(N'1990-03-15' AS Date), 1, NULL, 1, NULL, NULL, NULL, NULL),
+(3, N'manager@gmail.com', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Le Van C', N'0933456789', 1, N'67 Nguyen Trai, Hanoi', CAST(N'1985-07-20' AS Date), 0, NULL, 1, NULL, NULL, NULL, NULL),
+(4, N'shipper@gmail.com', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Pham Thi D', N'0978563412', 1, N'89 Hoang Hoa Tham, Hanoi', CAST(N'1992-11-25' AS Date), 1, NULL, 1, NULL, NULL, NULL, NULL),
+(5, N'customer2@gmail.com', N'5f4dcc3b5aa765d61d8327deb882cf99', N'Hoang Van E', N'0945678901', 1, N'12 Ly Thuong Kiet, Hanoi', CAST(N'1998-09-30' AS Date), 0, NULL, 0, NULL, NULL, NULL, NULL),
+(6, N'admin@gmail.com', N'5f4dcc3b5aa765d61d8327deb882cf99', N'A', N'0', 1, N'FPT', CAST(N'1969-06-09' AS Date), 1, NULL, 1, NULL, NULL, NULL, NULL);
 SET IDENTITY_INSERT [dbo].[Account] OFF
 GO
 
@@ -209,9 +210,10 @@ GO
 -- Chèn dữ liệu mẫu vào bảng Staff
 SET IDENTITY_INSERT [dbo].[Staff] ON 
 INSERT [dbo].[Staff] ([staff_id], [account_id], [role]) VALUES 
-(1, 2, 0), -- Nhân viên phục vụ
-(2, 3, 1), -- Quản lý
-(3, 4, 2); -- Nhân viên giao hàng
+(1, 2, 3),
+(2, 3, 1),
+(3, 4, 2),
+(4, 6, 0);
 SET IDENTITY_INSERT [dbo].[Staff] OFF
 GO
 

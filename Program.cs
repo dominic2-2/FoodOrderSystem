@@ -13,6 +13,15 @@ namespace FoodOrderSystem
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Add session
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
@@ -31,6 +40,7 @@ namespace FoodOrderSystem
             builder.Services.AddScoped<ICustomerService, CustomerService>();
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IStaffService, StaffService>();
+            builder.Services.AddScoped<IEmailService, EmailService>();
 
             var app = builder.Build();
 
@@ -44,6 +54,8 @@ namespace FoodOrderSystem
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseSession();
 
             app.UseRouting();
 
