@@ -16,5 +16,6 @@ namespace FoodOrderSystem.Repositories.Implements
         Task<List<Product>> GetAllProductsWithPagingAsync(int page, int pageSize);
         Task<int> GetTotalProductsAsync();
         Task<List<Product>> SearchProductsAsync(int priceMin, int priceMax, List<int> categoryIds, int page, int pageSize, string name);
+        Task<List<Product>> GetBestSellerProducts(string StatusPro);
     }
 }

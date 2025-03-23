@@ -1,6 +1,8 @@
-﻿using FoodOrderSystem.Models;
+﻿using FoodOrderSystem.DTOs;
+using FoodOrderSystem.Models;
 using FoodOrderSystem.Repositories.Implements;
 using FoodOrderSystem.Services.Implements;
+using FoodOrderSystem.Utils;
 
 namespace FoodOrderSystem.Services
 {
@@ -74,6 +76,17 @@ namespace FoodOrderSystem.Services
         public async Task<List<Account>> GetAccountStaffsAsync()
         {
             return await _accountRepository.GetAccountStaffsAsync();
+        }
+
+        public async Task<bool> ResetPassword(AccountDTO accountDTO, string newPassword)
+        {
+            var account = await _accountRepository.GetAccountInfoByEmailAsync(accountDTO.Email);
+            if (account == null) return false;
+
+            account.Password = SecurityUtils.HashMd5(newPassword);
+            account.UpdateTime = TimeOnly.FromDateTime(DateTime.Now);
+
+            return await _accountRepository.ResetPassword(account);
         }
     }
 

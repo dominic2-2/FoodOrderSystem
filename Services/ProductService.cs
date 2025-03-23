@@ -148,5 +148,22 @@ namespace FoodOrderSystem.Services
                 StatusPro = p.StatusPro ?? 0
             }).ToList();
         }
+
+        public async Task<List<ProductDTO>> GetBestSellerProducts(string StatusPro)
+        {
+            var products = await _productRepository.GetBestSellerProducts(StatusPro);
+            return products.Select(p => new ProductDTO
+            {
+                ProductId = p.ProductId,
+                ProductName = p.ProductName ?? string.Empty,
+                Price = p.Price ?? 0,
+                Img = p.Img ?? string.Empty,
+                Description = p.Description ?? string.Empty,
+                ReleaseDate = p.ReleaseDate ?? DateOnly.FromDateTime(System.DateTime.Now),
+                Author = p.Author ?? string.Empty,
+                Quantity = p.Quantity ?? 0,
+                StatusPro = p.StatusPro ?? 0
+            }).ToList();
+        }
     }
 }

@@ -83,5 +83,11 @@ namespace FoodOrderSystem.Repositories
                 .Where(a => a.Role == 1 && a.Staff.Any(s => s.AccountId == a.AccountId && s.Role == 3))
                 .ToListAsync();
         }
+
+        public async Task<bool> ResetPassword(Account account)
+        {
+            _context.Accounts.Update(account);
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

@@ -131,5 +131,14 @@ namespace FoodOrderSystem.Repositories
                 .Take(pageSize)
                 .ToListAsync();
         }
+
+        public async Task<List<Product>> GetBestSellerProducts(string StatusPro)
+        {
+            return await _context.Products
+                .Where(p => p.StatusPro == int.Parse(StatusPro))
+                .OrderByDescending(p => p.Quantity)
+                .Take(10)
+                .ToListAsync();
+        }
     }
 }

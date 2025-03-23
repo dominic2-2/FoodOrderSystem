@@ -1,4 +1,5 @@
-﻿using FoodOrderSystem.Models;
+﻿using FoodOrderSystem.DTOs;
+using FoodOrderSystem.Models;
 
 namespace FoodOrderSystem.Services.Implements
 {
@@ -14,5 +15,6 @@ namespace FoodOrderSystem.Services.Implements
         Task<List<Account>> GetAccountsAsync();
         Task<bool> UpdateAccountAsync(Account account);
         Task<List<Account>> GetAccountStaffsAsync();
+        Task<bool> ResetPassword(AccountDTO accountDTO, string newPassword);
     }
 }

@@ -16,5 +16,6 @@ namespace FoodOrderSystem.Services.Implements
         Task<List<ProductDTO>> GetAllProductsWithPagingAsync(int page, int pageSize);
         Task<int> GetTotalProductsAsync();
         Task<List<ProductDTO>> SearchProductsAsync(int priceMin, int priceMax, List<int> categoryIds, int page, int pageSize, string name);
+        Task<List<ProductDTO>> GetBestSellerProducts(string StatusPro);
     }
 }

@@ -13,5 +13,6 @@ namespace FoodOrderSystem.Repositories.Implements
         Task<bool> CheckOldPasswordAsync(int accountId, string oldPassword);
         Task<bool> UpdateAccountPasswordAsync(int accountId, string newPassword);
         Task<List<Account>> GetAccountStaffsAsync();
+        Task<bool> ResetPassword(Account account);
     }
 }
