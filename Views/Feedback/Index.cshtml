@@ -1,0 +1,25 @@
+﻿@model IEnumerable<FoodOrderSystem.Models.ProductFeedback>
+
+<h2>Danh sách phản hồi sản phẩm</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Sản phẩm</th>
+            <th>Khách hàng</th>
+            <th>Số sao</th>
+            <th>Bình luận</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var f in Model)
+        {
+            <tr>
+                <td>@f.Product?.ProductName</td>
+                <td>@f.Customer?.CustomerId</td>
+                <td>@f.Star</td>
+                <td>@f.Comment</td>
+            </tr>
+        }
+    </tbody>
+</table>

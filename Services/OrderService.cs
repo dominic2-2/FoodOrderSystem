@@ -90,5 +90,49 @@ namespace FoodOrderSystem.Services
         {
             return await _orderRepository.DeleteOrderAsync(orderId);
         }
+        public List<OrderDTO> GetAllOrders()
+        {
+            var orders = _orderRepository.GetAllOrders(); // gọi từ repo
+            return orders.Select(o => new OrderDTO
+            {
+                OrderId = o.OrderId,
+                CustomerId = o.Customer.CustomerId,
+                OrderDate = o.OrderDate ?? DateOnly.FromDateTime(System.DateTime.Now), // Fix for CS0266 and CS8629
+                TotalPrice = o.TotalPrice ?? 0, // Fix for CS0117 and CS1061
+                StatusOrder = o.StatusOrder ?? 0, // Fix for CS0117 and CS1061
+                StatusPayment = o.StatusPayment ?? 0 // Fix for CS0117 and CS1061
+            }).ToList();
+        }
+
+        public OrderDTO GetOrderById(int orderId)
+        {
+            var order = _orderRepository.GetOrderByIdAsync(orderId).Result;
+            if (order == null)
+            {
+                return new OrderDTO(); // Return a new instance to avoid null reference
+            }
+
+            return new OrderDTO
+            {
+                OrderId = order.OrderId,
+                OrderDate = order.OrderDate ?? DateOnly.FromDateTime(System.DateTime.Now),
+                Note = order.Note,
+                TotalPrice = order.TotalPrice ?? 0,
+                StatusOrder = order.StatusOrder ?? 0,
+                StatusPayment = order.StatusPayment ?? 0,
+                CustomerId = order.CustomerId ?? 0
+            };
+        }
+
+        // Cập nhật trạng thái đơn hàng
+        public void UpdateOrder(OrderDTO orderDTO)
+        {
+            var order = _orderRepository.GetOrderByIdAsync(orderDTO.OrderId).Result;
+            if (order != null)
+            {
+                order.StatusOrder = orderDTO.StatusOrder;
+                _orderRepository.UpdateOrderStatusAsync(order.OrderId, order.StatusOrder ?? 0).Wait();
+            }
+        }
     }
 }

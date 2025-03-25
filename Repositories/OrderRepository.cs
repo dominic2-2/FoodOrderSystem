@@ -75,6 +75,17 @@ namespace FoodOrderSystem.Repositories
             _context.Orders.Remove(order);
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public List<Order> GetAllOrders()
+        {
+            return _context.Orders.Include(o => o.Customer).ToList();
+        }
+
+        // Lưu thay đổi vào cơ sở dữ liệu
+        public async Task Save()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 
 }

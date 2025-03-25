@@ -11,5 +11,8 @@ namespace FoodOrderSystem.Services.Implements
         Task<bool> UpdateOrderStatusAsync(int orderId, int statusOrder);
         Task<bool> UpdatePaymentStatusAsync(int orderId, int statusPayment);
         Task<bool> DeleteOrderAsync(int orderId);
+        List<OrderDTO> GetAllOrders();
+        OrderDTO GetOrderById(int orderId);
+        void UpdateOrder(OrderDTO orderDTO);
     }
 }
